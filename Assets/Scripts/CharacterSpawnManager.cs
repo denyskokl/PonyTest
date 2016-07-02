@@ -1,26 +1,42 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CharacterSpawnManager : MonoBehaviour {
-
+public class CharacterSpawnManager : MonoBehaviour
+{
+    public static CharacterSpawnManager Instance;
     private GameObject _dogPrefab;
     private GameObject _cowPrefab;
+
+    public Transform CoralEnter;
 
     [SerializeField]
     private BoxCollider _dogCollider;
     [SerializeField]
     private BoxCollider _cowCollider;
+    [SerializeField]
+    private BoxCollider _corelCollider;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
-    void Start ()
+    void Start()
     {
         _dogPrefab = Resources.Load("Characters/Dog") as GameObject;
         _cowPrefab = Resources.Load("Characters/Cow") as GameObject;
     }
 
-    // Update is called once per frame
-    void Update () {
-	    if(Input.GetKeyUp(KeyCode.Q))
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Q))
         {
             SpawnCharacter(_dogPrefab, RandomDogPosition());
         }
@@ -31,7 +47,7 @@ public class CharacterSpawnManager : MonoBehaviour {
         }
     }
 
-    private void SpawnCharacter(GameObject characterPrefab , Vector3 position)
+    private void SpawnCharacter(GameObject characterPrefab, Vector3 position)
     {
         GameObject go = Instantiate(characterPrefab);
         go.transform.position = position;
@@ -41,7 +57,7 @@ public class CharacterSpawnManager : MonoBehaviour {
     {
         return new Vector3(Random.Range(
             _cowCollider.transform.position.x + _cowCollider.transform.localScale.x / 2,
-            _cowCollider.transform.position.x - _cowCollider.transform.localScale.x / 2), 0, 
+            _cowCollider.transform.position.x - _cowCollider.transform.localScale.x / 2), 0,
             Random.Range(
             _cowCollider.transform.position.z + _cowCollider.transform.localScale.z / 2,
             _cowCollider.transform.position.z - _cowCollider.transform.localScale.z / 2
@@ -60,6 +76,19 @@ public class CharacterSpawnManager : MonoBehaviour {
              ));
 
     }
+
+    public Vector3 RandomCorelPosition()
+    {
+        return new Vector3(Random.Range(
+            _corelCollider.transform.position.x + _corelCollider.transform.localScale.x / 2,
+            _corelCollider.transform.position.x - _corelCollider.transform.localScale.x / 2), 0,
+            Random.Range(
+            _corelCollider.transform.position.z + _corelCollider.transform.localScale.z / 2,
+            _corelCollider.transform.position.z - _corelCollider.transform.localScale.z / 2
+            ));
+    }
+
+
 
 
 }

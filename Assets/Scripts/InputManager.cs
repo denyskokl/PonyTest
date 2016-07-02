@@ -27,6 +27,7 @@ public class InputManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
                 if (hit.collider != null)
                 {
+                    if (hit.collider.tag == "Сorral") return;
                     Debug.Log(hit.collider.name + " name");
                     var newDog = hit.collider.GetComponent<Dog>();
                     if (newDog != null)
