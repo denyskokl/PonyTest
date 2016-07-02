@@ -15,6 +15,8 @@ public class CharacterSpawnManager : MonoBehaviour
     [SerializeField]
     private BoxCollider _corelCollider;
 
+    private float _cowOffset = 2f;
+
     void Awake()
     {
         if (Instance == null)
@@ -88,6 +90,16 @@ public class CharacterSpawnManager : MonoBehaviour
             ));
     }
 
+    public Vector3 RandomPositionAroundDog(Dog dog)
+    {
+        return new Vector3(Random.Range(
+            dog.transform.position.x + _cowOffset,
+             dog.transform.position.x  - _cowOffset), 0,
+            Random.Range(
+            dog.transform.position.z + _cowOffset,
+            dog.transform.position.z - _cowOffset
+            ));
+    }
 
 
 

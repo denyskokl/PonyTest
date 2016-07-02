@@ -6,7 +6,7 @@ public class Dog : BaseCharakter
     [SerializeField]
     private SpriteRenderer _selected;
     public Action<Dog> OnCorral;
-    public Action<Vector3, Action> OnMoveTo;
+    public Action<Dog, Action> OnMoveToDog;
 
     public float SphereRadius = 4f;
 
@@ -23,6 +23,7 @@ public class Dog : BaseCharakter
             if (!cow.CompareTag("Attached"))
             {
                 cow.GetComponent<Cow>().Subscribe(this);
+                cow.tag = "Attached";
             }
         }
     }
@@ -40,20 +41,20 @@ public class Dog : BaseCharakter
     public override void MoveTo(Vector3 targetPosition, Action OnComplete = null)
     {
         base.MoveTo(targetPosition, OnComplete);
-        if (OnMoveTo != null)
+        if (OnMoveToDog != null)
         {
-            OnMoveTo(transform.position, null);
+            OnMoveToDog(this, null);
         }
 
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        
-        if(other.CompareTag("CoralEnter"))
+
+        if (other.CompareTag("CoralEnter"))
         {
             Debug.Log("==============");
-            if(OnCorral != null)
+            if (OnCorral != null)
             {
                 OnCorral(this);
             }

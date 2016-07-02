@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class Cow : BaseCharakter {
 
+
     public void Unsubscribe(Dog dog)
     {
-        dog.OnMoveTo -= MoveTo;
+        dog.OnMoveToDog -= MoveToDog;
         dog.OnCorral -= MoveCorral;
     }
 
     public void Subscribe(Dog dog)
     {
-        dog.OnMoveTo += MoveTo;
+        dog.OnMoveToDog += MoveToDog;
         dog.OnCorral += MoveCorral;
     }
     public void MoveCorral(Dog dog)
@@ -22,5 +23,20 @@ public class Cow : BaseCharakter {
 
                 MoveTo(CharacterSpawnManager.Instance.RandomCorelPosition());
         });
+    }
+
+    public void MoveToDog(Dog dog, Action OnComplete = null)
+    {
+      MoveTo(  CharacterSpawnManager.Instance.RandomPositionAroundDog(dog), OnComplete);
+    }
+
+    public override void MoveTo(Vector3 targetPosition, Action OnComplete = null)
+    {
+        var direction = targetPosition - transform.position;
+        var localDirection = transform.InverseTransformDirection(direction);
+
+        Debug.Log(localDirection.x + "`````x````````" + localDirection.y + "`````y````````" + localDirection.z + "`````z````````");
+
+        base.MoveTo(targetPosition, OnComplete);
     }
 }
