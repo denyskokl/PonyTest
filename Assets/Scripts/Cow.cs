@@ -32,11 +32,27 @@ public class Cow : BaseCharakter {
 
     public override void MoveTo(Vector3 targetPosition, Action OnComplete = null)
     {
-        var direction = targetPosition - transform.position;
-        var localDirection = transform.InverseTransformDirection(direction);
+        Vector3 direction  = Vector3.Normalize( transform.InverseTransformDirection(targetPosition - transform.position));
 
-        Debug.Log(localDirection.x + "`````x````````" + localDirection.y + "`````y````````" + localDirection.z + "`````z````````");
+        //Debug.Log(" dir x: "+ direction.x+ " dir y: " + direction.y + " dir z: " + direction.z  );
+        if (direction.y > 0)
+        {
 
+            // it's moving up
+        }
+        else
+        {
+            // it's moving down
+        }
+
+       
+
+        float ang = Vector2.Angle(transform.position, targetPosition);
+        Vector3 cross = Vector3.Cross(transform.position, targetPosition);
+
+        Debug.Log(ang + " ang" + cross.x + " cross.x  + " + cross.y + "  + cross.u " + cross.z + " --croezse z");
         base.MoveTo(targetPosition, OnComplete);
     }
+
+
 }

@@ -28,7 +28,6 @@ public class InputManager : MonoBehaviour
                 if (hit.collider != null)
                 {
                     if (hit.collider.tag == "Сorral") return;
-                    Debug.Log(hit.collider.name + " name");
                     var newDog = hit.collider.GetComponent<Dog>();
                     if (newDog != null)
                     {
@@ -43,7 +42,6 @@ public class InputManager : MonoBehaviour
                     }
                     else
                     {
-                        //need refactor
                         _target.gameObject.SetActive(true);
                         _target.position = hit.point + _targetOffset;
                         if(CurrentDog != null)

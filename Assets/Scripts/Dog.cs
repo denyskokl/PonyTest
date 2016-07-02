@@ -45,7 +45,6 @@ public class Dog : BaseCharakter
         {
             OnMoveToDog(this, null);
         }
-
     }
 
     public void OnTriggerEnter(Collider other)
@@ -53,7 +52,6 @@ public class Dog : BaseCharakter
 
         if (other.CompareTag("CoralEnter"))
         {
-            Debug.Log("==============");
             if (OnCorral != null)
             {
                 OnCorral(this);
