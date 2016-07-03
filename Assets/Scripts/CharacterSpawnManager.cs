@@ -2,21 +2,19 @@
 
 public class CharacterSpawnManager : MonoBehaviour
 {
+    public Transform CoralEnter;
     public static CharacterSpawnManager Instance;
     private GameObject _dogPrefab;
     private GameObject _cowPrefab;
-
-    public Transform CoralEnter;
-
+    private float _cowOffset = 2f;
+    
     [SerializeField]
     private BoxCollider _dogCollider;
     [SerializeField]
     private BoxCollider _cowCollider;
     [SerializeField]
     private BoxCollider _corelCollider;
-
-    private float _cowOffset = 2f;
-
+    
     void Awake()
     {
         if (Instance == null)
@@ -29,25 +27,25 @@ public class CharacterSpawnManager : MonoBehaviour
         }
     }
 
-
     void Start()
     {
         _dogPrefab = Resources.Load("Characters/Dog") as GameObject;
         _cowPrefab = Resources.Load("Characters/Cow") as GameObject;
     }
 
-    void Update()
+    public void SpawnCow()
     {
-        if (Input.GetKeyUp(KeyCode.Q))
-        {
-            SpawnCharacter(_dogPrefab, RandomDogPosition());
-        }
-
-        if (Input.GetKeyUp(KeyCode.W))
+        for (int i = 0; i < 5; i++)
         {
             SpawnCharacter(_cowPrefab, RandomCowPosition());
         }
     }
+
+    public void SpawnDog()
+    {
+        SpawnCharacter(_dogPrefab, RandomDogPosition());
+    }
+
 
     private void SpawnCharacter(GameObject characterPrefab, Vector3 position)
     {
@@ -57,50 +55,44 @@ public class CharacterSpawnManager : MonoBehaviour
 
     private Vector3 RandomCowPosition()
     {
-        return new Vector3(Random.Range(
-            _cowCollider.transform.position.x + _cowCollider.transform.localScale.x / 2,
-            _cowCollider.transform.position.x - _cowCollider.transform.localScale.x / 2), 0,
-            Random.Range(
-            _cowCollider.transform.position.z + _cowCollider.transform.localScale.z / 2,
-            _cowCollider.transform.position.z - _cowCollider.transform.localScale.z / 2
-            ));
+        return new Vector3(GenerateRandomPositionX(_cowCollider), 0, GenerateRandomPositionZ(_cowCollider));
     }
 
 
     private Vector3 RandomDogPosition()
     {
-        return new Vector3(Random.Range(
-             _dogCollider.transform.position.x + _dogCollider.transform.localScale.x / 2,
-             _dogCollider.transform.position.x - _dogCollider.transform.localScale.x / 2), 0,
-             Random.Range(
-             _dogCollider.transform.position.z + _dogCollider.transform.localScale.z / 2,
-             _dogCollider.transform.position.z - _dogCollider.transform.localScale.z / 2
-             ));
-
+        return new Vector3(GenerateRandomPositionX(_dogCollider), 0, GenerateRandomPositionZ(_dogCollider));
     }
 
     public Vector3 RandomCorelPosition()
     {
-        return new Vector3(Random.Range(
-            _corelCollider.transform.position.x + _corelCollider.transform.localScale.x / 2,
-            _corelCollider.transform.position.x - _corelCollider.transform.localScale.x / 2), 0,
-            Random.Range(
-            _corelCollider.transform.position.z + _corelCollider.transform.localScale.z / 2,
-            _corelCollider.transform.position.z - _corelCollider.transform.localScale.z / 2
-            ));
+        return new Vector3(GenerateRandomPositionX(_corelCollider), 0, GenerateRandomPositionZ(_corelCollider));
+    }
+
+    private float GenerateRandomPositionX(BoxCollider collider)
+    {
+        return Random.Range(
+            collider.transform.position.x + collider.transform.localScale.x / 2,
+            collider.transform.position.x - collider.transform.localScale.x / 2);
+    }
+
+    private float GenerateRandomPositionZ(BoxCollider collider)
+    {
+        return Random.Range(
+            collider.transform.position.z + collider.transform.localScale.z / 2,
+            collider.transform.position.z - collider.transform.localScale.z / 2);
     }
 
     public Vector3 RandomPositionAroundDog(Dog dog)
     {
-        return new Vector3(Random.Range(
+        return new Vector3(
+            Random.Range(
             dog.transform.position.x + _cowOffset,
-             dog.transform.position.x  - _cowOffset), 0,
+             dog.transform.position.x - _cowOffset),
+            0,
             Random.Range(
             dog.transform.position.z + _cowOffset,
             dog.transform.position.z - _cowOffset
             ));
     }
-
-
-
 }

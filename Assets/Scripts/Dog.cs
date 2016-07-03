@@ -3,13 +3,11 @@ using UnityEngine;
 
 public class Dog : BaseCharakter
 {
-    [SerializeField]
-    private SpriteRenderer _selected;
+    public float SphereRadius = 4f;
     public Action<Dog> OnCorral;
     public Action<Dog, Action> OnMoveToDog;
-
-    public float SphereRadius = 4f;
-
+    [SerializeField]
+    private SpriteRenderer _selected;
     private LayerMask _groupCharacterMask;
     void Start()
     {
@@ -49,7 +47,6 @@ public class Dog : BaseCharakter
 
     public void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("CoralEnter"))
         {
             if (OnCorral != null)

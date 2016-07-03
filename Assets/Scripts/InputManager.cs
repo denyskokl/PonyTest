@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class InputManager : MonoBehaviour
 {
-
-    private LayerMask _selectableMask;
+    public Dog CurrentDog;
     [SerializeField]
     private Transform _target;
-
+    private LayerMask _selectableMask;
     private Vector3 _targetOffset = new Vector3(0, 0.5f, 0);
-
-    public Dog CurrentDog;
 
     void Start()
     {
         _selectableMask = ~(1 << LayerMask.NameToLayer("GroupCharacter"));
-
     }
 
     void Update()
@@ -44,11 +39,10 @@ public class InputManager : MonoBehaviour
                     {
                         _target.gameObject.SetActive(true);
                         _target.position = hit.point + _targetOffset;
-                        if(CurrentDog != null)
+                        if (CurrentDog != null)
                         {
                             CurrentDog.MoveTo(_target.position);
                         }
-
                     }
                 }
         }
